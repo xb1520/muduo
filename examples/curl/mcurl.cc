@@ -8,7 +8,7 @@ EventLoop* g_loop = NULL;
 
 void onData(const char* data, int len)
 {
-  printf("len %d\n", len);
+  // printf("len %d\n", len);
 }
 
 void done(curl::Request* c, int code)
@@ -18,6 +18,7 @@ void done(curl::Request* c, int code)
 
 void done2(curl::Request* c, int code)
 {
+  printf("done2 %p %s %d %d\n", c, c->getEffectiveUrl(), c->getResponseCode(), code);
   printf("done2 %p %s %d %d\n", c, c->getRedirectUrl(), c->getResponseCode(), code);
   // g_loop->quit();
 }
@@ -30,11 +31,14 @@ int main(int argc, char* argv[])
   curl::Curl::initialize(curl::Curl::kCURLssl);
   curl::Curl curl(&loop);
 
-  curl::RequestPtr req = curl.getUrl("http://chenshuo.com");
+  curl::RequestPtr req = curl.getUrl("http://baidu.com");
   req->setDataCallback(onData);
-  req->setDoneCallback(done);
+  // req->setHeaderCallback([](const char* data, int len){
+  //   printf("data:[%s] len:[%d]\n",data,len);
+  // });
+  req->setDoneCallback(done2);
 
-  curl::RequestPtr req2 = curl.getUrl("https://github.com");
+  curl::RequestPtr req2 = curl.getUrl("https://taobao.com");
   // req2->allowRedirect(5);
   req2->setDataCallback(onData);
   req2->setDoneCallback(done);

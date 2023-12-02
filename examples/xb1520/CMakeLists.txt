@@ -1,0 +1,5 @@
+add_executable(xb1520_test1 xb1520_test1.cpp)
+target_link_libraries(xb1520_test1 muduo_net)
+
+add_executable(xb1520_tcpclient_workflow_test1 xb1520_tcpclient_workflow_test1.cpp)
+target_link_libraries(xb1520_tcpclient_workflow_test1 muduo_net)
